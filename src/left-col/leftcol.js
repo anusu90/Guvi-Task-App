@@ -26,7 +26,7 @@ function LeftCol(props) {
     return (
         <div className="col-lg-4 text-center">
             <h1> DAYS</h1>
-            <button className="btn btn-primary" onClick={addDay}> Add Day </button>
+            <button className="btn btn-primary mainBtn" onClick={addDay}> Add Day </button>
 
             {
                 props.day.map((individualDays) => {

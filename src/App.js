@@ -59,12 +59,18 @@ function App() {
   const [selectedTask, setSelectedTask] = useState({});
 
   return (
-    <div className="container">
-      <div className="row">
+    <div className="container h-100">
+      <div className="row h-100 align-items-center">
+        <div className="col-12">
 
-        <LeftCol day={day} setDay={setDay} setselectedDay={setselectedDay} />
-        <MiddleCol selectedDay={selectedDay} setselectedDay={setselectedDay} day={day} setDay={setDay} selectedTask={selectedTask} setSelectedTask={setSelectedTask} />
-        <RightCol selectedTask={selectedTask} setSelectedTask={setSelectedTask} />
+          <div className="row">
+
+            <LeftCol day={day} setDay={setDay} setselectedDay={setselectedDay} />
+            <MiddleCol selectedDay={selectedDay} setselectedDay={setselectedDay} day={day} setDay={setDay} selectedTask={selectedTask} setSelectedTask={setSelectedTask} />
+            <RightCol selectedTask={selectedTask} setSelectedTask={setSelectedTask} />
+          </div>
+
+        </div>
 
       </div>
 

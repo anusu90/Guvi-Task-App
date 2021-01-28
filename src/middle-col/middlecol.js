@@ -58,6 +58,19 @@ function MiddleCol(props) {
 
     }
 
+
+    const removeTask = (task) => {
+
+        props.selectedDay.taskList.splice(props.selectedDay.taskList.indexOf(task), 1)
+
+        props.day[props.day.indexOf(props.selectedDay)] = props.selectedDay;
+        props.setDay([...props.day]);
+        props.setselectedDay(() => props.selectedDay);
+
+        props.setSelectedTask();
+
+    }
+
     const showTask = (task) => {
         console.log(task)
         props.setSelectedTask(() => task);
@@ -69,7 +82,7 @@ function MiddleCol(props) {
         <div className="col-lg-4  text-center">
             <h1>TASKS</h1>
             {/* <button className="btn btn-primary" onClick={() => { addTask(props.selectedDay) }}> Add Task </button> */}
-            <button className="btn btn-primary" onClick={handleShow}> Add Task</button>
+            <button className="btn btn-primary mainBtn" onClick={handleShow}> Add Task</button>
 
             <Modal show={show} onHide={handleClose}>
                 <Modal.Header closeButton>
@@ -106,6 +119,9 @@ function MiddleCol(props) {
                                     <button className="taskBtn" onClick={() => { showTask(t) }}>
                                         {t.taskTitle}
                                     </button>
+                                </div>
+                                <div className="col-sm-4">
+                                    <button className="btn btn-danger" onClick={() => removeTask(t)}>X</button>
                                 </div>
                             </div>
                         )

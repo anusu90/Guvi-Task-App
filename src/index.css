@@ -6,6 +6,7 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
+  height: 100vh;
 }
 
 code {
@@ -35,4 +36,13 @@ code {
 .taskBtn:hover {
   background-color: turquoise;
   border-radius: 10px;
+}
+
+.mainBtn {
+  width: 100%;
+  margin: 4px;
+}
+
+.removeBtn {
+  margin: 2px;
 }

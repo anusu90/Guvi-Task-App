@@ -64,12 +64,10 @@ function App() {
         <div className="col-12">
 
           <div className="row">
-
             <LeftCol day={day} setDay={setDay} setselectedDay={setselectedDay} />
             <MiddleCol selectedDay={selectedDay} setselectedDay={setselectedDay} day={day} setDay={setDay} selectedTask={selectedTask} setSelectedTask={setSelectedTask} />
             <RightCol selectedTask={selectedTask} setSelectedTask={setSelectedTask} />
           </div>
-
         </div>
 
       </div>

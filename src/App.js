@@ -3,6 +3,8 @@ import LeftCol from "./left-col/leftcol"
 import MiddleCol from "./middle-col/middlecol"
 import RightCol from "./right-col/rightcol"
 import React, { useState } from 'react'
+import { DragDropContext } from "react-beautiful-dnd"
+import Dnd from "./dnd"
 
 
 function App() {
@@ -67,6 +69,8 @@ function App() {
             <LeftCol day={day} setDay={setDay} setselectedDay={setselectedDay} />
             <MiddleCol selectedDay={selectedDay} setselectedDay={setselectedDay} day={day} setDay={setDay} selectedTask={selectedTask} setSelectedTask={setSelectedTask} />
             <RightCol selectedTask={selectedTask} setSelectedTask={setSelectedTask} />
+
+            {/* <Dnd selectedDay={selectedDay} ></Dnd> */}
           </div>
         </div>
 

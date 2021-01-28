@@ -1,14 +1,18 @@
 import React, { useState } from 'react'
 import { Modal, Button, Form } from 'react-bootstrap';
+import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
+
+
+
 
 
 
 function MiddleCol(props) {
 
     const [show, setShow] = useState(false);
-
     const [taskTitle, settaskTitle] = useState("");
     const [taskDiscription, settaskDiscription] = useState("")
+    const [list, setList] = useState([...props.selectedDay.taskList])
 
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
@@ -39,24 +43,24 @@ function MiddleCol(props) {
     }
 
 
-    const addTask = (selectedDay) => {
+    // const addTask = (selectedDay) => {
 
-        let countOfTasks = selectedDay.taskList.length
-        let newTask = {
-            taskID: countOfTasks + 1,
-            taskTitle: `Task-${countOfTasks + 1}`,
-            taskDesc: ""
-        }
-        selectedDay.taskList.push(newTask);
+    //     let countOfTasks = selectedDay.taskList.length
+    //     let newTask = {
+    //         taskID: countOfTasks + 1,
+    //         taskTitle: `Task-${countOfTasks + 1}`,
+    //         taskDesc: ""
+    //     }
+    //     selectedDay.taskList.push(newTask);
 
 
-        props.day[props.day.indexOf(selectedDay)] = selectedDay;
-        props.setDay([...props.day]);
-        props.setselectedDay(selectedDay);
+    //     props.day[props.day.indexOf(selectedDay)] = selectedDay;
+    //     props.setDay([...props.day]);
+    //     props.setselectedDay(selectedDay);
 
-        // return <InputModal></InputModal>
+    //     // return <InputModal></InputModal>
 
-    }
+    // }
 
 
     const removeTask = (task) => {
@@ -74,6 +78,17 @@ function MiddleCol(props) {
     const showTask = (task) => {
         console.log(task)
         props.setSelectedTask(() => task);
+    }
+
+    const handleOnDragEnd = (result) => {
+        console.log(result);
+        let tempArray = [...props.selectedDay.taskList]
+        let [movedItem] = tempArray.splice(result.source.index, 1)
+        tempArray.splice(result.destination.index, 0, movedItem)
+        props.selectedDay.taskList = tempArray;
+
+        props.setselectedDay(() => props.selectedDay);
+
     }
 
 
@@ -110,25 +125,42 @@ function MiddleCol(props) {
                 </Modal.Footer>
             </Modal>
 
-            <div>
-                {
-                    props.selectedDay.taskList.map(t => {
-                        return (
-                            <div className="row">
-                                <div className="col-sm-8">
-                                    <button className="taskBtn" onClick={() => { showTask(t) }}>
-                                        {t.taskTitle}
-                                    </button>
-                                </div>
-                                <div className="col-sm-4">
-                                    <button className="btn btn-danger" onClick={() => removeTask(t)}>X</button>
-                                </div>
-                            </div>
-                        )
-                    })
-                }
+            <DragDropContext onDragEnd={handleOnDragEnd}>
+                <Droppable droppableId="list-group">
+                    {(provided) => (
+                        <ul className="list-group"{...provided.droppableProps} ref={provided.innerRef}>
+                            {
+                                props.selectedDay.taskList.map((t, i) => {
+                                    // list.map((t, i) => {
+                                    return (
+                                        <Draggable key={String(t.taskID)} draggableId={String(t.taskID)} index={i}>
+                                            {(provided) => (
+                                                <li className="list-group-item" ref={provided.innerRef} {...provided.draggableProps} {...provided.dragHandleProps}>
+                                                    <div className="row">
+                                                        <div className="col-sm-8">
+                                                            <button className="taskBtn" onClick={() => { showTask(t) }}>
+                                                                {t.taskTitle} {t.taskID}
+                                                            </button>
+                                                        </div>
+                                                        <div className="col-sm-4">
+                                                            <button className="btn btn-danger" onClick={() => removeTask(t)}>X</button>
+                                                        </div>
+                                                    </div>
+                                                </li>
+                                            )}
+                                        </Draggable>
+                                    );
+                                })
+                            }
 
-            </div>
+                            {provided.placeholder}
+
+                        </ul>
+                    )}
+                </Droppable>
+
+            </DragDropContext>
+
 
 
 
